@@ -6,7 +6,7 @@ const routes = new Router();
 
 // USER ROUTES
 routes.post("/user/store", UserController.store);
-routes.get("/user/login", UserController.login);
+routes.post("/user/login", UserController.login);
 routes.get("/user/show", UserController.show);
 routes.put("/user/update", UserController.update);
 routes.delete("/user/delete", UserController.delete);

@@ -29,7 +29,7 @@ class UserController {
                 usuario
             }
         })
-        if(!userVerify){
+        if (!userVerify) {
             try {
                 await prisma.usuario.create({
                     data: {
@@ -44,7 +44,7 @@ class UserController {
                     message: "Erro ao tentar cadastrar o usuário"
                 })
             }
-    
+
             return res.status(200).json({
                 error: false,
                 message: "Usuário cadastrado com Sucesso"
@@ -106,21 +106,30 @@ class UserController {
     async login(req, res) {
         let { usuario, senha } = req.body;
 
-        let user = await prisma.usuario.findFirst({
-            where: {
-                usuario,
-                senha
-            }
-        });
-        if (user) {
-            res.status(200).json({
-                error: false,
-                message: "Conectado"
+        // verifica se os campos estão vazios
+        if (usuario != "" || senha != "") {
+            let user = await prisma.usuario.findFirst({
+                where: {
+                    usuario,
+                    senha
+                }
             })
+            console.log(usuario, senha)
+            if (user) {
+                res.status(200).json({
+                    error: false,
+                    message: "Conectado"
+                })
+            } else {
+                res.status(400).json({
+                    error: true,
+                    message: "Usuário ou Senha incorretos"
+                })
+            }
         } else {
-            res.status(404).json({
+            res.status(400).json({
                 error: true,
-                message: "Usuário ou Senha incorretos"
+                message: "Preencha todos os campos"
             })
         }
     }
