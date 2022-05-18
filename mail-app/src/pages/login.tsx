@@ -1,25 +1,23 @@
-import axios from 'axios';
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+import login from '../utils/login';
 
 const Home: NextPage = () => {
   let [user, setUser] = useState("");
   let [password, setPassword] = useState("");
 
   async function handleSubmit() {
-    axios.post('http://localhost:8080/user/login', {
-      usuario: user,
-      senha: password
-    })
-      .then((res) => {
-        console.log(res.data)
+    let handle = await login(user, password);
+    // se retornar algum erro:
+    if (handle.error == true) {
+      Swal.fire({
+        icon: 'error',
+        text: handle.message
       })
-      .catch((e) => {
-        console.log(e.response.data);
-      })
-      .then(() => {
-
-      })
+    } else{
+      // logado
+    }
   }
 
   return (

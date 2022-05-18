@@ -114,7 +114,6 @@ class UserController {
                     senha
                 }
             })
-            console.log(usuario, senha)
             if (user) {
                 res.status(200).json({
                     error: false,
