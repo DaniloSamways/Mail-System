@@ -12,7 +12,7 @@ routes.put("/user/update", UserController.update);
 routes.delete("/user/delete", UserController.delete);
 
 // MESSAGE ROUTES
-routes.get("/message/show", MessageController.show);
+routes.post("/message/show", MessageController.show);
 routes.post("/message/store", MessageController.store);
 
 module.exports = routes;

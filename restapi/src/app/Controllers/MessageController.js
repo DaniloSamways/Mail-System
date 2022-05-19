@@ -24,40 +24,47 @@ class MessageController {
         })
     }
 
-    async store(req, res){
+    async store(req, res) {
         let { usuario, destinatario, assunto, mensagem } = req.body
+        // verifica se os campos estão preenchidos
+        if (destinatario != "" && assunto != "" && mensagem != "") {
+            // verifica se o destinatario existe
+            let destinatariosExists = await prisma.usuario.findUnique({
+                where: {
+                    usuario: destinatario
+                }
+            })
+            if (destinatariosExists && usuario != destinatario) {
+                try {
+                    await prisma.mensagem.create({
+                        data: {
+                            remetente: usuario,
+                            destinatario,
+                            assunto,
+                            mensagem
+                        }
+                    })
 
-        // verifica se o destinatario existe
-        let destinatariosExists = await prisma.usuario.findUnique({
-            where: {
-                usuario: destinatario
-            }
-        })
-        if(destinatariosExists && usuario != destinatario){
-            try{
-                await prisma.mensagem.create({
-                    data: {
-                        remetente: usuario,
-                        destinatario,
-                        assunto,
-                        mensagem
-                    }
-                })
-
-                res.status(200).send({
-                    error: false,
-                    message: "Mensagem enviada"
-                })
-            }catch(e){
+                    res.status(200).send({
+                        error: false,
+                        message: "Mensagem enviada"
+                    })
+                } catch (e) {
+                    res.status(400).send({
+                        error: true,
+                        message: "Não foi possível enviar a mensagem"
+                    })
+                }
+            } else {
                 res.status(400).send({
                     error: true,
-                    message: "Não foi possível enviar a mensagem"
+                    message: "Destinatário não encontrado"
                 })
             }
         } else{
-            res.status(400).send({
-                error: true,
-                message: "Destinatário não encontrado"
+            return res.status(400).send({
+                error:true,
+                message: "Preencha todos os campos"
             })
         }
     }
