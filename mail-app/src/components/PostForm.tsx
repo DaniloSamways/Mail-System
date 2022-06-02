@@ -1,8 +1,10 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
+import { useToasts } from 'react-toast-notifications';
 import postMsg from "../utils/postMsg";
 
 export default function PostForm(props: any) {
+    const { addToast } = useToasts()
+
     let [usuario, setUsuario] = useState(props.usuario);
     let [destinatario, setDestinatario] = useState("");
     let [assunto, setAssunto] = useState("");
@@ -11,15 +13,15 @@ export default function PostForm(props: any) {
     const handleSubmit = async () => {
         let handle = await postMsg(usuario, destinatario, assunto, mensagem)
         if (handle.error == true) {
-            Swal.fire({
-                icon: 'error',
-                text: handle.message
-            })
+            addToast(handle.message, {
+                appearance: 'error',
+                autoDismiss: true,
+              })
         } else {
-            Swal.fire({
-                icon: 'success',
-                text: handle.message
-            })
+            addToast(handle.message, {
+                appearance: 'success',
+                autoDismiss: true,
+              })
         }
     }
 

@@ -1,0 +1,38 @@
+.navbar {
+  background-color: var(--purple);
+  padding: 1em 5em 1em 5em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+.navbar li {
+
+  list-style-type: none;
+  font-size: 20px
+}
+
+.navbar li b {
+  color: rgb(170, 170, 170);
+  margin-right: 2px;
+}
+
+.navbar_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar_center .logo {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.navbar_center svg {
+  height: 20px;
+  width: 20px;
+}

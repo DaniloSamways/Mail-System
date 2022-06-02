@@ -1,9 +1,17 @@
+:root{
+  --black: #29262B;
+  --black2: #3C3541;
+  --purple: #AC5FDB;
+  --pink: #E3A2EE;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: rgb(223, 223, 223);
+  font-family: "Scandia";
+  background-color: var(--black2);
 }
 
 a {

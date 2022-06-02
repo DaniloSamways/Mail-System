@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const jwt = require('jsonwebtoken')
 
 class UserController {
 
@@ -107,7 +108,7 @@ class UserController {
         let { usuario, senha } = req.body;
 
         // verifica se os campos estão vazios
-        if (usuario != "" || senha != "") {
+        if ((usuario != "" || senha != "") && (usuario != undefined || senha != undefined)) {
             let user = await prisma.usuario.findFirst({
                 where: {
                     usuario,
@@ -115,10 +116,21 @@ class UserController {
                 }
             })
             if (user) {
-                res.status(200).json({
+                const token = jwt.sign({
+                    usuario: usuario
+                },
+                    process.env.privateKEY,
+                    {
+                        expiresIn: "1h"
+                    });
+
+                return res.status(200).json({
                     error: false,
-                    message: "Conectado"
+                    message: "Conectado",
+                    token: token
                 })
+
+
             } else {
                 res.status(400).json({
                     error: true,
@@ -130,8 +142,57 @@ class UserController {
                 error: true,
                 message: "Preencha todos os campos"
             })
-        }
+        };
+
     }
+
+    verifyJWT(req, res, next) {
+        var token = req.headers['x-access-token'];
+        if (!token) {
+            return res.status(401).json({
+                error: true,
+                message: "Token não encontrado"
+            })
+        }
+
+        jwt.verify(token, process.env.privateKEY, (err, decoded) => {
+            if (err) {
+                return res.status(401).json({
+                    error: true,
+                    message: "Token inválido",
+                })
+            } else {
+
+                next()
+            }
+        })
+    }
+    
+    auth(req, res) {
+        var token = req.headers['x-access-token'];
+        if (!token) {
+            return res.status(401).json({
+                error: true,
+                message: "Token não encontrado"
+            })
+        }else{
+            jwt.verify(token, process.env.privateKEY, (err, decoded) => {
+                if (err) {
+                    return res.status(401).json({
+                        error: true,
+                        message: "Token inválido"
+                    })
+                } else {
+                    return res.status(200).json({
+                        error: false,
+                        message: "Token válido",
+                        decoded
+                    })
+                }
+            })
+        }
+
+    };
 }
 
 module.exports = new UserController();

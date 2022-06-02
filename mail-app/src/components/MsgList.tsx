@@ -17,7 +17,6 @@ export default function MsgList(props: any) {
     const handleGetMsg = async () => {
         let get = await getMsg(usuario);
         setMessages(get.messages)
-        console.log(get.messages)
     }
 
     useEffect(() => {

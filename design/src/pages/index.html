@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <link rel="stylesheet" href="../../dist/output.css" />
+</head>
+
+<body class="antialiased">
+  <header class="h-16 flex items-center border-b border-gray-200">
+    <aside class="px-4 flex items-center justify-center">
+      <svg class="w-6 h-6 text-indigo-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+      </svg>
+      <h1 class="text-xl text-indigo-700">YourMail</h1>
+    </aside>
+    <nav class="h-full flex-1 flex items-center justify-center">
+      <ul class="flex space-x-3 h-16">
+        <li class="h-16 flex border-b-2 border-indigo-700 items-center">
+          <a href="#">Inbox</a>
+        </li>
+        <li class="text-gray-300 h-16 flex items-center">
+          <a href="users.html">Users</a>
+        </li>
+      </ul>
+    </nav>
+    <aside class="px-4 flex items-center justify-center">
+      <h1><b class="text-indigo-300 mr-1">@</b>admin</h1>
+    </aside>
+  </header>
+
+  <main class="w-4/6 mt-5 m-auto">
+    <section>
+      <div class="rounded border border-gray-300 p-3">
+        <div class="mx-3">
+          <header class="mb-2 grid-cols-3 grid">
+            <div>
+              <p class="text-2xl font-semibold">Inbox</p>
+              <p class="font-normal text-gray-400">100 messages</p>
+            </div>
+            <div class="text-right mx-8 col-span-2 my-auto">
+              <label for="search-input" class="text-xs">SEARCH</label>
+              <input id="search-input" type="text" placeholder="Search..."
+                class="border-2 rounded-lg px-2 mr-4"></input>
+
+              <label for="select" class="text-xs">ORDER BY</label>
+              <select id="select" class="border-2 rounded-[10px]">
+                <option selected>date</option>
+                <option>name</option>
+              </select>
+            </div>
+          </header>
+          <main class="main-height">
+            <!-- MAIL LINE FOR MAP -->
+            <div>
+              <div
+                class="cursor-default grid text-lg grid-cols-[8rem_auto_6vw] transition-all hover:bg-[#f8f8f8] duration-300">
+                <p class="pl-2 truncate font-semibold message-border">Geovanne</p>
+                <p class="truncate w-full font-semibold message-border">Congratulations
+                  <b class="font-normal text-gray-400 ">- Hi, this is a welcome message for you, sir.
+                    Congrulations from Dawez</b>
+                </p>
+                <p class="pl-2 w-auto message-border"><b class="text-xs font-semibold">22/05/2022</b></p>
+              </div>
+            </div>
+            <!-- END MAIL LINE FOR MAP -->
+
+          </main>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NEW MAIL BUTTON -->
+  <button
+    class="hidden border bottom-0 right-8 absolute px-10 py-2 rounded-tr-xl rounded-tl-xl bg-gray-100 border-gray-300 hover:bg-gray-300 transition duration-300">
+    <div>
+      <div class="flex">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+          </path>
+        </svg>
+        <b>New Mail</b>
+      </div>
+    </div>
+  </button>
+  <!-- END NEW MAIL BUTTON -->
+
+  <!-- NEW MAIL MODAL -->
+  <div class="bottom-0 right-8 absolute border rounded border-indigo-200 w-1/4">
+    <div class="mx-10 my-3">
+      <header class="text-center">
+        <p class="text-indigo-700">New Mail</p>
+        <hr>
+      </header>
+      <main>
+        <div class="flex border rounded px-2">
+          <p class="font-semibold italic text-gray-500">To:</p>
+          <input type="text" class="ml-2 w-11/12 focus:outline-none"/>
+        </div>
+        <div class="flex border rounded px-2 mt-2">
+          <p class="font-semibold italic text-gray-500">Subject:</p>
+          <input type="text" class="ml-2 w-11/12 focus:outline-none" />
+        </div>
+        <div class="flex border rounded px-2 mt-2">
+          <p class="font-semibold italic text-gray-500">Message:</p>
+          <textarea rows="4" class="text-sm pt-0.5 ml-2 w-11/12 focus:outline-none resize-none"></textarea>
+        </div>
+        <div class="flex justify-end">
+          <button class="form-button">Cancel</button>
+          <button class="form-button !bg-indigo-700">Send</button>
+        </div>
+      </main>
+    </div>
+  </div>
+    <!-- END NEW MAIL MODAL -->
+</body>
+
+</html>
