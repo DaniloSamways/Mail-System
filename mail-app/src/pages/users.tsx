@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Index from "../components/Index";
+import Navbar from "../components/Navbar";
+import User from "../components/Users";
 
-
-export default function Inbox() {
-    const [usuario, setUsuario] = useState();
+export default function Users(){
+    const [usuario, setUsuario] = useState("");
     const [logged, setLogged] = useState(false);
-    const [mensagens, setMensagens] = useState([]);
 
     const authParams = async () => {
         const token = localStorage.getItem("authToken");
@@ -34,9 +33,11 @@ export default function Inbox() {
         authParams();
     }, [])
 
-    return (
+    return(
         <>
-            {logged ? <Index usuario={usuario} /> : null}
+            <Navbar usuario={usuario} selected="users"/>
+
+            <User usuario={usuario}/>
         </>
-    )
-}   
+    );
+}

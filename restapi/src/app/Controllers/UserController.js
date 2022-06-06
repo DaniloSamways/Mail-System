@@ -60,48 +60,62 @@ class UserController {
 
     async update(req, res) {
         let { usuario, nome, senha } = req.body;
-        try {
-            await prisma.usuario.update({
-                where: {
-                    usuario
-                },
-                data: {
-                    nome,
-                    senha
-                }
-            })
-
-        } catch (e) {
+        if ((nome == "" || senha == "") || (nome == null || senha == null)) {
             res.status(400).json({
                 error: true,
-                message: "Não foi possível editar o usuário"
+                message: "Preencha todos os campos"
+            })
+        } else {
+            try {
+                await prisma.usuario.update({
+                    where: {
+                        usuario
+                    },
+                    data: {
+                        nome,
+                        senha
+                    }
+                })
+
+            } catch (e) {
+                res.status(400).json({
+                    error: true,
+                    message: "Não foi possível editar o usuário"
+                })
+            }
+            res.status(200).json({
+                error: false,
+                message: "Usuário editado com sucesso"
             })
         }
-        res.status(200).json({
-            error: false,
-            message: "Usuário editado com sucesso"
-        })
     }
 
     async delete(req, res) {
-        let { usuario } = req.body;
-        try {
-            await prisma.usuario.delete({
-                where: {
-                    usuario
-                }
-            })
-
-        } catch (e) {
+        let { usuario, usuarioAtivo } = req.body;
+        if (usuario == usuarioAtivo) {
             res.status(400).json({
                 error: true,
-                message: "Não foi possível deletar o Usuário"
+                message: "Não é possível excluir a si mesmo"
+            })
+        } else {
+            try {
+                await prisma.usuario.delete({
+                    where: {
+                        usuario
+                    }
+                })
+
+            } catch (e) {
+                res.status(400).json({
+                    error: true,
+                    message: "Não foi possível deletar o Usuário"
+                })
+            }
+            res.status(200).json({
+                error: false,
+                message: "Usuário excluido com sucesso"
             })
         }
-        res.status(200).json({
-            error: false,
-            message: "Usuário excluido com sucesso"
-        })
     }
 
     async login(req, res) {
@@ -167,7 +181,7 @@ class UserController {
             }
         })
     }
-    
+
     auth(req, res) {
         var token = req.headers['x-access-token'];
         if (!token) {
@@ -175,7 +189,7 @@ class UserController {
                 error: true,
                 message: "Token não encontrado"
             })
-        }else{
+        } else {
             jwt.verify(token, process.env.privateKEY, (err, decoded) => {
                 if (err) {
                     return res.status(401).json({

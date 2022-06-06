@@ -1,0 +1,10 @@
+.message_border {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.main_height {
+    max-height: 70vh;
+    overflow-y: scroll;
+}

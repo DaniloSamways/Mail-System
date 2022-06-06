@@ -1,0 +1,79 @@
+.login_img {
+    background-color: #e5e5f7;
+    opacity: 0.5;
+    background-image: linear-gradient(30deg, #8c8c8c 12%, transparent 12.5%, transparent 87%, #8c8c8c 87.5%, #8c8c8c), linear-gradient(150deg, #8c8c8c 12%, transparent 12.5%, transparent 87%, #8c8c8c 87.5%, #8c8c8c), linear-gradient(30deg, #8c8c8c 12%, transparent 12.5%, transparent 87%, #8c8c8c 87.5%, #8c8c8c), linear-gradient(150deg, #8c8c8c 12%, transparent 12.5%, transparent 87%, #8c8c8c 87.5%, #8c8c8c), linear-gradient(60deg, #8c8c8c77 25%, transparent 25.5%, transparent 75%, #8c8c8c77 75%, #8c8c8c77), linear-gradient(60deg, #8c8c8c77 25%, transparent 25.5%, transparent 75%, #8c8c8c77 75%, #8c8c8c77);
+    background-size: 24px 42px;
+    background-position: 0 0, 0 0, 12px 21px, 12px 21px, 0 0, 12px 21px;
+}
+
+.main_height {
+    max-height: 70vh;
+    overflow-y: scroll;
+  }
+
+.input_login {
+    margin-top: 20px;
+
+    border-bottom: 2px solid rgba(156, 163, 175, 0.212);
+
+    padding-left: 0.5rem
+        /* 8px */
+    ;
+    padding-right: 0.5rem
+        /* 8px */
+    ;
+
+    transition: border-color 1s;
+
+    transition: transform 0.3s;
+}
+
+.input_login:hover {
+    transform: scale(1.05);
+}
+
+.input_login:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --tw-border-opacity: 1;
+    border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.form_button {
+    margin-top: 1rem
+        /* 16px */
+    ;
+    border-width: 1px;
+    padding-left: 1rem
+        /* 16px */
+    ;
+    padding-right: 1rem
+        /* 16px */
+    ;
+    border-radius: 0.25rem
+        /* 4px */
+    ;
+    --tw-bg-opacity: 1;
+    background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+
+    transition: transform 0.3s;
+}
+
+.form_button:hover {
+    transform: scale(1.1)
+}
+
+.form_button:active {
+    transform: scale(0.9)
+}
+
+.hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.hidetext {
+    -webkit-text-security: disc;
+}

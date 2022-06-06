@@ -34,27 +34,35 @@ class MessageController {
                     usuario: destinatario
                 }
             })
-            if (destinatariosExists && usuario != destinatario) {
-                try {
-                    await prisma.mensagem.create({
-                        data: {
-                            remetente: usuario,
-                            destinatario,
-                            assunto,
-                            mensagem
-                        }
-                    })
-
-                    res.status(200).send({
-                        error: false,
-                        message: "Mensagem enviada"
-                    })
-                } catch (e) {
+            if (destinatariosExists) {
+                if(usuario != destinatario){
+                    try {
+                        await prisma.mensagem.create({
+                            data: {
+                                remetente: usuario,
+                                destinatario,
+                                assunto,
+                                mensagem
+                            }
+                        })
+    
+                        res.status(200).send({
+                            error: false,
+                            message: "Mensagem enviada"
+                        })
+                    } catch (e) {
+                        res.status(400).send({
+                            error: true,
+                            message: "Não foi possível enviar a mensagem"
+                        })
+                    }
+                } else {
                     res.status(400).send({
                         error: true,
-                        message: "Não foi possível enviar a mensagem"
+                        message: "Não é possível enviar mensagem para si mesmo"
                     })
                 }
+                
             } else {
                 res.status(400).send({
                     error: true,

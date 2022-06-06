@@ -11,7 +11,8 @@ export default function PostForm(props: any) {
     let [mensagem, setMensagem] = useState("");
 
     const handleSubmit = async () => {
-        let handle = await postMsg(usuario, destinatario, assunto, mensagem)
+        let token = localStorage.getItem("authToken");
+        let handle = await postMsg(usuario, destinatario, assunto, mensagem, token)
         if (handle.error == true) {
             addToast(handle.message, {
                 appearance: 'error',
