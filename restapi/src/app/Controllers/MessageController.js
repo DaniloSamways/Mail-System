@@ -76,6 +76,27 @@ class MessageController {
             })
         }
     }
+
+    async delete(req, res) {
+        let { messageId } = req.body;
+        try {
+            await prisma.mensagem.delete({
+                where: {
+                    id: messageId
+                }
+            })
+
+        } catch (e) {
+            res.status(400).json({
+                error: true,
+                message: "Não foi possível apagar a mensagem"
+            })
+        }
+        res.status(200).json({
+            error: false,
+            message: "Mensagem apagada com sucesso"
+        })
+    }
 }
 
 module.exports = new MessageController();

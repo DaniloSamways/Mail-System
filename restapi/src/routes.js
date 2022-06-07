@@ -15,5 +15,6 @@ routes.get("/user/auth", UserController.auth);
 // MESSAGE ROUTES
 routes.post("/message/show", UserController.verifyJWT, MessageController.show);
 routes.post("/message/store", UserController.verifyJWT, MessageController.store);
+routes.delete("/message/delete", UserController.verifyJWT, MessageController.delete);
 
 module.exports = routes;

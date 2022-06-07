@@ -24,37 +24,46 @@ class UserController {
     async store(req, res) {
         let { usuario, nome, senha } = req.body
 
-        // verifica se o usuário já existe
-        let userVerify = await prisma.usuario.findUnique({
-            where: {
-                usuario
-            }
-        })
-        if (!userVerify) {
-            try {
-                await prisma.usuario.create({
-                    data: {
-                        usuario,
-                        nome,
-                        senha
-                    }
-                })
-            } catch (e) {
-                return res.status(400).json({
-                    error: true,
-                    message: "Erro ao tentar cadastrar o usuário"
-                })
-            }
-
-            return res.status(200).json({
-                error: false,
-                message: "Usuário cadastrado com Sucesso"
-            })
-        } else {
+        if ((usuario == '' || nome == '' || senha == '') || (usuario == undefined || nome == undefined || senha == undefined)) {
             res.status(400).json({
                 error: true,
-                message: "Usuário já cadastrado"
+                message: "Preencha todos os campos"
             })
+        }
+        else {
+
+            // verifica se o usuário já existe
+            let userVerify = await prisma.usuario.findUnique({
+                where: {
+                    usuario
+                }
+            })
+            if (!userVerify) {
+                try {
+                    await prisma.usuario.create({
+                        data: {
+                            usuario,
+                            nome,
+                            senha
+                        }
+                    })
+                } catch (e) {
+                    return res.status(400).json({
+                        error: true,
+                        message: "Erro ao tentar cadastrar o usuário"
+                    })
+                }
+
+                return res.status(200).json({
+                    error: false,
+                    message: "Usuário cadastrado com Sucesso"
+                })
+            } else {
+                res.status(400).json({
+                    error: true,
+                    message: "Usuário já cadastrado"
+                })
+            }
         }
     }
 
@@ -98,23 +107,36 @@ class UserController {
                 message: "Não é possível excluir a si mesmo"
             })
         } else {
-            try {
-                await prisma.usuario.delete({
-                    where: {
-                        usuario
-                    }
-                })
-
-            } catch (e) {
+            let hasMessages = await prisma.mensagem.findMany({
+                where: {
+                    destinatario: usuario
+                }
+            })
+            if (hasMessages) {
                 res.status(400).json({
                     error: true,
-                    message: "Não foi possível deletar o Usuário"
+                    message: "Não é possível excluir o usuário, pois existem mensagens associadas a ele"
+                })
+            } else {
+                try {
+                    await prisma.usuario.delete({
+                        where: {
+                            usuario
+                        }
+                    })
+
+                } catch (e) {
+                    res.status(400).json({
+                        error: true,
+                        message: "Não foi possível deletar o Usuário"
+                    })
+                }
+                res.status(200).json({
+                    error: false,
+                    message: "Usuário excluido com sucesso"
                 })
             }
-            res.status(200).json({
-                error: false,
-                message: "Usuário excluido com sucesso"
-            })
+
         }
     }
 

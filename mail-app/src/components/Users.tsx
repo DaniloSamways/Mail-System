@@ -9,9 +9,18 @@ export default function User(props: any) {
     const [user, setUser] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [token, setToken] = useState("");
+
+    const clearData = () => {
+        setPassword("");
+        setUser("");
+        setName("");
+    }
 
     const handleGetUsers = async () => {
-        let token = localStorage.getItem('authToken') || '';
+        let token = localStorage.getItem("authToken") || '';
+        setToken(token);
+
         let get = await axios.get('http://localhost:8080/user/show',
             {
                 headers: {
@@ -28,7 +37,6 @@ export default function User(props: any) {
     }
 
     let handleDelete = (user: string) => {
-        let token = localStorage.getItem('authToken') || '';
         Swal.fire({
             title: `Are you sure to delete <b>${user}</b>?`,
             text: "You won't be able to revert this!",
@@ -39,7 +47,6 @@ export default function User(props: any) {
             confirmButtonText: 'Confirm'
         }).then((result) => {
             if (result.isConfirmed) {
-                let token = localStorage.getItem('authToken') || '';
                 axios.delete('http://localhost:8080/user/delete',
                     {
                         headers: {
@@ -67,107 +74,122 @@ export default function User(props: any) {
                         )
                         return e.response.data
                     })
-                    
+
             }
         })
     }
 
     let handleNewUser = async () => {
-        setName();
-        setPassword();
-        setUser();
-        Swal.fire({
+        clearData();
+        const { value: newUserValues } = await Swal.fire({
             title: `New User</b>`,
             html:
                 `<input id="swal-input1" placeholder="User" class="swal2-input" value="${user}">` +
-                `<input id="swal-input1" placeholder="Name" class="swal2-input" value="${name}">` +
+                `<input id="swal-input2" placeholder="Name" class="swal2-input" value="${name}">` +
                 `<input id="swal-input3" placeholder="Password" class="swal2-input" value="${password}">`,
             showCancelButton: true,
-            confirmButtonColor: '#616161',
+            confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirm',
-        }).then(result => {
-            if (result.isConfirmed) {
-                let token = localStorage.getItem('authToken') || '';
-                axios.put('http://localhost:8080/user/update',
-                    {
-                        headers: {
-                            "x-access-token": token
-                        },
-                        data: {
-                            "usuario": user,
-                            "usuarioAtivo": props.usuario,
-                            "nome": name,
-                            "senha": password
-                        }
-                    })
-                    .then((res) => {
-                        Swal.fire(
-                            'Edited!',
-                            `User successfully edited.`,
-                            'success'
-                        )
-                        handleGetUsers()
-                        return res.data.users
-                    })
-                    .catch((e) => {
-                        Swal.fire(
-                            'Error!',
-                            `${e.response.data.message}`,
-                            'error'
-                        )
-                        return e.response.data
-                    })
+            preConfirm: () => {
+                return [
+                    document.getElementById("swal-input1").value,
+                    document.getElementById("swal-input2").value,
+                    document.getElementById("swal-input3").value,
+                ]
             }
         })
+
+        if (newUserValues) {
+            let user = newUserValues[0];
+            let name = newUserValues[1];
+            let password = newUserValues[2];
+            
+            axios.post('http://localhost:8080/user/store', {
+                "usuario": user,
+                "nome": name,
+                "senha": password
+            },
+                {
+                    headers: {
+                        "x-access-token": token
+                    }
+                })
+                .then((res) => {
+                    Swal.fire(
+                        'Registered!',
+                        `User successfully registered.`,
+                        'success'
+                    )
+                    handleGetUsers()
+                    return res.data.users
+                })
+                .catch((e) => {
+                    Swal.fire(
+                        'Error!',
+                        `${e.response.data.message}`,
+                        'error'
+                    )
+                    return e.response.data
+                })
+        }
     }
 
     let handleEdit = async (user: string, name: string, password: string) => {
         setName(name);
         setPassword(password);
-        Swal.fire({
+
+        const { value: formValues } = await Swal.fire({
             title: `Edit <b>${user}</b>`,
             html:
-                `<input id="swal-input1" placeholder="Nome" class="swal2-input" value="${name}">` +
-                `<input id="swal-input3" placeholder="Senha" class="swal2-input" value="${password}">`,
+                `<label for="swal-input1">Username</label><input id="swal-input1" placeholder="Nome" class="swal2-input" value="${name}">` +
+                `<br/><br/><label for="swal-input2">Password</label><input id="swal-input2" placeholder="Senha" class="swal2-input" value="${password}">`,
+            focusConfirm: false,
             showCancelButton: true,
-            confirmButtonColor: '#616161',
+            confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Confirm',
-        }).then(result => {
-            if (result.isConfirmed) {
-                let token = localStorage.getItem('authToken') || '';
-                axios.put('http://localhost:8080/user/update',
-                    {
-                        headers: {
-                            "x-access-token": token
-                        },
-                        data: {
-                            "usuario": user,
-                            "usuarioAtivo": props.usuario,
-                            "nome": name,
-                            "senha": password
-                        }
-                    })
-                    .then((res) => {
-                        Swal.fire(
-                            'Edited!',
-                            `User successfully edited.`,
-                            'success'
-                        )
-                        handleGetUsers()
-                        return res.data.users
-                    })
-                    .catch((e) => {
-                        Swal.fire(
-                            'Error!',
-                            `${e.response.data.message}`,
-                            'error'
-                        )
-                        return e.response.data
-                    })
+            preConfirm: () => {
+                return [
+                    document.getElementById("swal-input1").value,
+                    document.getElementById("swal-input2").value,
+                ]
             }
         })
+
+        if (formValues) {
+            let name = formValues[0];
+            let password = formValues[1];
+            axios.put('http://localhost:8080/user/update', {
+                "usuario": user,
+                "usuarioAtivo": props.usuario,
+                "nome": name,
+                "senha": password
+            },
+                {
+                    headers: {
+                        "x-access-token": token
+                    }
+                })
+                .then((res) => {
+                    Swal.fire(
+                        'Edited!',
+                        `User successfully edited.`,
+                        'success'
+                    )
+                    handleGetUsers()
+                    return res.data.users
+                })
+                .catch((e) => {
+                    Swal.fire(
+                        'Error!',
+                        `${e.response.data.message}`,
+                        'error'
+                    )
+                    return e.response.data
+                })
+        }
+        clearData();
     }
 
     useEffect(() => {
