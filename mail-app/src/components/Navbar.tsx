@@ -2,7 +2,7 @@ import Link from "next/link"
 import styles from "../styles/Login.module.css"
 
 export default function Navbar(props: any) {
-    let admin = "admin"
+    let admin = "dawez"
 
     return (
         <header className="h-16 flex items-center border-b border-gray-200">
@@ -15,11 +15,7 @@ export default function Navbar(props: any) {
             </aside>
             <nav className="h-full flex-1 flex items-center justify-center">
                 <ul className="flex space-x-3 h-16">
-                    <li className={props.selected == "inbox" ? "h-16 flex border-b-2 border-indigo-700 items-center" : "text-gray-300 h-16 flex items-center"}>
-                        <Link href="/">
-                            <a>Inbox</a>
-                        </Link>
-                    </li>
+
 
                     {props.usuario == admin ? (
                         <li className={props.selected == "users" ? "h-16 flex border-b-2 border-indigo-700 items-center" : "text-gray-300 h-16 flex items-center"}>
@@ -27,7 +23,11 @@ export default function Navbar(props: any) {
                                 <a>Users</a>
                             </Link>
                         </li>
-                    ) : null}
+                    ) : <li className={props.selected == "inbox" ? "h-16 flex border-b-2 border-indigo-700 items-center" : "text-gray-300 h-16 flex items-center"}>
+                        <Link href="/">
+                            <a>Inbox</a>
+                        </Link>
+                    </li>}
 
                 </ul>
             </nav>

@@ -64,7 +64,7 @@ export default function Login() {
                             <main className="text-center mx-auto mb-5">
                                 <input type="text" className={styles.input_login} placeholder="User" onChange={(e) => setUser(e.target.value)} />
                                 <br />
-                                <input type="text" className={styles.input_login} placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                                <input type="password" className={styles.input_login} placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                                 <br />
                                 <input type="button" value="Login" className={styles.form_button} onClick={handleSubmit}/>
                             </main>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import User from "../components/Users";
 
-export default function Users(){
+export default function Users() {
     const [usuario, setUsuario] = useState("");
     const [logged, setLogged] = useState(false);
 
@@ -33,11 +33,9 @@ export default function Users(){
         authParams();
     }, [])
 
-    return(
+    return (
         <>
-            <Navbar usuario={usuario} selected="users"/>
-
-            <User usuario={usuario}/>
+            {logged ? <><Navbar usuario={usuario} selected="users" /> <User usuario={usuario} /></> : null}
         </>
     );
 }

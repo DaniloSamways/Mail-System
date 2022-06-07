@@ -6,8 +6,6 @@ import Index from "../components/Index";
 export default function Inbox() {
     const [usuario, setUsuario] = useState();
     const [logged, setLogged] = useState(false);
-    const [mensagens, setMensagens] = useState([]);
-
     const authParams = async () => {
         const token = localStorage.getItem("authToken");
         if (token) {

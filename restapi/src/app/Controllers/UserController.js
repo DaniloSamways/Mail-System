@@ -107,7 +107,7 @@ class UserController {
                 message: "Não é possível excluir a si mesmo"
             })
         } else {
-            let hasMessages = await prisma.mensagem.findMany({
+            let hasMessages = await prisma.mensagem.findFirst({
                 where: {
                     destinatario: usuario
                 }
