@@ -4,13 +4,33 @@ const prisma = new PrismaClient()
 class MessageController {
 
     async show(req, res) {
-        let { usuario } = req.body
+        let { usuario, orderby, search } = req.body
         try {
-            var messages = await prisma.mensagem.findMany({
-                where: {
-                    destinatario: usuario
-                }
-            });
+            if (orderby == "data") {
+                var messages = await prisma.mensagem.findMany({
+                    where: {
+                        destinatario: usuario,
+                        assunto: {
+                            contains: search
+                        }
+                    },
+                    orderBy: {
+                        data: "desc"
+                    }
+                });
+            } else {
+                var messages = await prisma.mensagem.findMany({
+                    where: {
+                        destinatario: usuario,
+                        assunto: {
+                            contains: search
+                        }
+                    },
+                    orderBy: {
+                        assunto: "desc"
+                    }
+                });
+            }
         } catch (e) {
             res.status(400).json({
                 error: true,
@@ -35,7 +55,7 @@ class MessageController {
                 }
             })
             if (destinatariosExists) {
-                if(usuario != destinatario){
+                if (usuario != destinatario) {
                     try {
                         await prisma.mensagem.create({
                             data: {
@@ -45,7 +65,7 @@ class MessageController {
                                 mensagem
                             }
                         })
-    
+
                         res.status(200).send({
                             error: false,
                             message: "Mensagem enviada"
@@ -62,16 +82,16 @@ class MessageController {
                         message: "Não é possível enviar mensagem para si mesmo"
                     })
                 }
-                
+
             } else {
                 res.status(400).send({
                     error: true,
                     message: "Destinatário não encontrado"
                 })
             }
-        } else{
+        } else {
             return res.status(400).send({
-                error:true,
+                error: true,
                 message: "Preencha todos os campos"
             })
         }

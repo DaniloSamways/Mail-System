@@ -21,6 +21,7 @@ export default function Login() {
             localStorage.setItem("authToken", handle.token);
             verifyToken()
         }
+
     }
 
     const verifyToken = async () => {
@@ -66,7 +67,7 @@ export default function Login() {
                                 <br />
                                 <input type="password" className={styles.input_login} placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                                 <br />
-                                <input type="button" value="Login" className={styles.form_button} onClick={handleSubmit}/>
+                                <input type="button" value="Login" className={styles.form_button} onClick={handleSubmit} />
                             </main>
                         </div>
                     </div>

@@ -1,8 +1,10 @@
 const axios = require('axios');
 
-export default(usuario, token) => {
+export default(usuario, token, orderby, search) => {
     let post = axios.post('http://localhost:8080/message/show', {
-        usuario
+        usuario,
+        orderby,
+        search
     },
     {
         headers: {

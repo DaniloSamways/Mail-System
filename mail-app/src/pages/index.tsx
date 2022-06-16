@@ -15,8 +15,12 @@ export default function Inbox() {
                 }
             }).then((res) => {
                 if (res.data.error == false) {
-                    setUsuario(res.data.decoded.usuario)
+                    let user = res.data.decoded.usuario
+                    setUsuario(user)
                     setLogged(true)
+                    if(user === "admin"){
+                        window.location.assign('/users')
+                    }
                 } else {
                     window.location.assign('/login')
                 }
@@ -34,7 +38,7 @@ export default function Inbox() {
 
     return (
         <>
-            {logged ? <Index usuario={usuario} /> : null}
+            {logged && usuario != "admin" ? <Index usuario={usuario} /> : null}
         </>
     )
 }   

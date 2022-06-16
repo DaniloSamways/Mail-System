@@ -2,7 +2,7 @@ import Link from "next/link"
 import styles from "../styles/Login.module.css"
 
 export default function Navbar(props: any) {
-    let admin = "dawez"
+    let admin = "admin"
 
     return (
         <header className="h-16 flex items-center border-b border-gray-200">

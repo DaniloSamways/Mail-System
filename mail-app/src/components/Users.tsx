@@ -11,6 +11,8 @@ export default function User(props: any) {
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("");
 
+    const [inputSearch, setInputSearch] = useState("");
+
     const clearData = () => {
         setPassword("");
         setUser("");
@@ -25,6 +27,9 @@ export default function User(props: any) {
             {
                 headers: {
                     "x-access-token": token
+                },
+                params: {
+                    search: inputSearch
                 }
             })
             .then((res) => {
@@ -194,7 +199,7 @@ export default function User(props: any) {
 
     useEffect(() => {
         handleGetUsers();
-    }, [])
+    }, [inputSearch])
 
     return (
         <main className="w-4/6 mt-5 m-auto">
@@ -209,7 +214,7 @@ export default function User(props: any) {
                             <div className="text-right mx-8 col-span-2 my-auto">
                                 <label htmlFor="search-input" className="text-xs">SEARCH</label>
                                 <input id="search-input" type="text" placeholder="Search..."
-                                    className="border-2 rounded-lg px-2 mr-4"></input>
+                                    className="border-2 rounded-lg px-2 mr-4" value={inputSearch} onChange={(e) => setInputSearch(e.target.value)}></input>
 
                                 <label htmlFor="select" className="text-xs">ORDER BY</label>
                                 <select id="select" className="border-2 rounded-[10px]">

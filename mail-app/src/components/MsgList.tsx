@@ -12,13 +12,13 @@ export default function MsgList(props: any) {
     const handleGetMsg = async () => {
         let token = localStorage.getItem("authToken") || '';
         setToken(token)
-        let get = await getMsg(usuario, token);
+        let get = await getMsg(usuario, token, props.orderby, props.search);
         setMessages(get.messages)
     }
 
     useEffect(() => {
         handleGetMsg();
-    }, [])
+    }, [props.orderby, props.search])
 
     const formatDate = (date: string) => {
         date = date.slice(0, -14);
