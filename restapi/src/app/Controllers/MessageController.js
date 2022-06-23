@@ -57,12 +57,21 @@ class MessageController {
             if (destinatariosExists) {
                 if (usuario != destinatario) {
                     try {
+                        var data = new Date().toLocaleDateString('pt-BR', {
+                            timeZone: 'America/Sao_Paulo'
+                        }).split('/');
+                        var time = new Date().toLocaleTimeString('pt-BR', {
+                            timeZone: 'America/Sao_Paulo'
+                        }).split(':');
+                        data = `${data[2]}-${data[1]}-${data[0]}T${time[0]}:${time[1]}:${time[2]}Z`
+
                         await prisma.mensagem.create({
                             data: {
                                 remetente: usuario,
                                 destinatario,
                                 assunto,
-                                mensagem
+                                mensagem,
+                                data
                             }
                         })
 

@@ -5,7 +5,7 @@ export default async function postMsg(usuario, destinatario, assunto, mensagem, 
         usuario,
         destinatario,
         assunto,
-        mensagem
+        mensagem,
     },
         {
             headers: {

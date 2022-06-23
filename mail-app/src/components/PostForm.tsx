@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToasts } from 'react-toast-notifications';
 import postMsg from "../utils/postMsg";
 import styles from "../styles/Login.module.css";
@@ -31,7 +31,7 @@ export default function PostForm(props: any) {
 
     return (
         <>
-            <button onClick={() => {setFormModal(''), setButtonModal('hidden')}}
+            <button onClick={() => { setFormModal(''), setButtonModal('hidden') }}
                 className={`${buttonModal} border bottom-0 right-8 absolute px-10 py-2 rounded-tr-xl rounded-tl-xl bg-gray-100 border-gray-300 hover:bg-gray-300 transition duration-300`}>
                 <div>
                     <div className="flex">
@@ -49,7 +49,7 @@ export default function PostForm(props: any) {
                 <div className="mx-10 my-3">
                     <header className="text-center">
                         <p className="text-indigo-700">New Mail</p>
-                        <hr/>
+                        <hr />
                     </header>
                     <main>
                         <div className="flex border rounded px-2">
@@ -65,8 +65,8 @@ export default function PostForm(props: any) {
                             <textarea rows={4} className="text-sm pt-0.5 ml-2 w-11/12 focus:outline-none resize-none" value={mensagem} onChange={(e) => setMensagem(e.target.value)} ></textarea>
                         </div>
                         <div className="flex justify-end">
-                            <button className={styles.form_button} onClick={() => {setButtonModal(""), setFormModal("hidden")}}>Cancel</button>
-                            <button className={`${styles.form_button} !bg-indigo-700`} onClick={() => {setButtonModal(""), setFormModal("hidden"), handleSubmit()}}>Send</button>
+                            <button className={styles.form_button} onClick={() => { setButtonModal(""), setFormModal("hidden") }}>Cancel</button>
+                            <button className={`${styles.form_button} !bg-indigo-700`} onClick={() => { setButtonModal(""), setFormModal("hidden"), handleSubmit() }}>Send</button>
                         </div>
                     </main>
                 </div>
