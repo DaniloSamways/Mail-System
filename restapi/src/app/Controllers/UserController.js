@@ -158,7 +158,7 @@ class UserController {
         let { usuario, senha } = req.body;
 
         // verifica se os campos estão vazios
-        if ((usuario != "" || senha != "") && (usuario != undefined || senha != undefined)) {
+        if (usuario && senha) {
             let user = await prisma.usuario.findFirst({
                 where: {
                     usuario,
